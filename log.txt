@@ -1,0 +1,23 @@
+commit 00baf513991b79173174508a969f64d35a221cc5
+Author: fentiss <48540027+fentiss@users.noreply.github.com>
+Date:   Sat Mar 30 18:07:14 2019 -0400
+
+    added gitignore
+
+commit a8dfc332d50ce3ba2c89f916f517381cda18d041
+Author: fentiss <48540027+fentiss@users.noreply.github.com>
+Date:   Sat Mar 30 17:57:34 2019 -0400
+
+    added both files
+
+commit b2fe8ec1f40a700a7d47e992e6725a9cc8fa2470
+Author: fentiss <48540027+fentiss@users.noreply.github.com>
+Date:   Sat Mar 30 17:51:15 2019 -0400
+
+    added line 2 to readme.txt
+
+commit e9bbbdb305af7ae2da342dac28da69d91f0d7f25
+Author: fentiss <48540027+fentiss@users.noreply.github.com>
+Date:   Sat Mar 30 17:47:03 2019 -0400
+
+    added readme.txt
