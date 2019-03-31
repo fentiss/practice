@@ -1,0 +1,185 @@
+Exercise 1 - Self-Help
+1. Use man to look up the flag for human-readable output from ls.
+man ls
+#
+2. Get help with man by typing man man into the console.
+man man
+#
+3. Wouldn’t it be nice if there was a calendar command? Use apropos to look for such a command, then use man to read about how that command works.
+apropos calendar
+#
+
+Exercise 2 - Get Wild
+1. Before I organized the photos by year, what command would have listed all of the photos of type .png?
+ls *.png
+2. Before I organized the photos by year, what command would have deleted all of my hiking photos?
+rm *hiking*
+3. What series of commands would you use in order to put my figures for a data science course and the pictures I took in the lab into their own folders?
+## 2016-06-20-datasci01.png
+## 2016-06-20-datasci02.png
+## 2016-06-20-datasci03.png
+## 2016-06-21-lab01.jpg
+## 2016-06-21-lab02.jpg
+## 2017-01-02-hiking01.jpg
+## 2017-01-02-hiking02.jpg
+## 2017-02-10-hiking01.jpg
+## 2017-02-10-hiking02.jpg
+mkdir datasci && mkdir lab && mv *datasci* datasci && mv *lab* lab
+
+Exercise 3 - Search
+1. Search states.txt and canada.txt for lines that contain the word “New”.
+cd ~/Downloads && grep "New" states.txt canada.txt
+# states.txt:New Hampshire
+# states.txt:New Jersey
+# states.txt:New Mexico
+# states.txt:New York
+# canada.txt:Newfoundland and Labrador
+# canada.txt:New Brunswick
+2. Make five text files containing the names of states that don’t contain one of each of the five vowels.
+egrep -v "A|a" ~/Downloads/states.txt > ~/Downloads/states-a.txt
+# Connecticut
+# Illinois
+# Kentucky
+# Mississippi
+# Missouri
+# New Jersey
+# New Mexico
+# New York
+# Ohio
+# Oregon
+# Tennessee
+# Vermont
+# Wisconsin
+# Wyoming
+egrep -v "E|e" ~/Downloads/states.txt > ~/Downloads/states-e.txt
+# Alabama
+# Alaska
+# Arizona
+# Arkansas
+# California
+# Colorado
+# Florida
+# Hawaii
+# Idaho
+# Illinois
+# Indiana
+# Iowa
+# Kansas
+# Louisiana
+# Maryland
+# Michigan
+# Mississippi
+# Missouri
+# Montana
+# North Carolina
+# North Dakota
+# Ohio
+# Oklahoma
+# South Carolina
+# South Dakota
+# Utah
+# Virginia
+# Washington
+# Wisconsin
+# Wyoming
+egrep -v "I|i" ~/Downloads/states.txt > ~/Downloads/states-i.txt
+# Alabama
+# Alaska
+# Arkansas
+# Colorado
+# Delaware
+# Kansas
+# Kentucky
+# Maryland
+# Massachusetts
+# Montana
+# Nebraska
+# Nevada
+# New Jersey
+# New York
+# North Dakota
+# Oklahoma
+# Oregon
+# South Dakota
+# Tennessee
+# Texas
+# Utah
+# Vermont
+egrep -v "O|o" ~/Downloads/states.txt > ~/Downloads/states-o.txt
+# Alabama
+# Alaska
+# Arkansas
+# Delaware
+# Hawaii
+# Indiana
+# Kansas
+# Kentucky
+# Maine
+# Maryland
+# Massachusetts
+# Michigan
+# Mississippi
+# Nebraska
+# Nevada
+# New Hampshire
+# New Jersey
+# Pennsylvania
+# Tennessee
+# Texas
+# Utah
+# Virginia
+# West Virginia
+egrep -v "U|u" ~/Downloads/states.txt > ~/Downloads/states-u.txt
+# Alabama
+# Alaska
+# Arizona
+# Arkansas
+# California
+# Colorado
+# Delaware
+# Florida
+# Georgia
+# Hawaii
+# Idaho
+# Illinois
+# Indiana
+# Iowa
+# Kansas
+# Maine
+# Maryland
+# Michigan
+# Minnesota
+# Mississippi
+# Montana
+# Nebraska
+# Nevada
+# New Hampshire
+# New Jersey
+# New Mexico
+# New York
+# North Carolina
+# North Dakota
+# Ohio
+# Oklahoma
+# Oregon
+# Pennsylvania
+# Rhode Island
+# Tennessee
+# Texas
+# Vermont
+# Virginia
+# Washington
+# West Virginia
+# Wisconsin
+# Wyoming
+3. Download the GitHub repository for this book and find out how many .html files it contains.
+find ~/Downloads/the-unix-workbench-master/ -name "*.html" | wc -l
+#       13
+
+Exercise 4 - Pipes
+1. Use pipes to figure out how many US states contain the word “New.”
+grep "New" ~/Downloads/states.txt | wc -l
+#        4
+2. Examine your ~/.bash_history to try to figure out how many unique commands you’ve ever used. (You may need to look up how to use the uniq and sort commands).
+uniq -c ~/.bash_history | wc -l
+#      104

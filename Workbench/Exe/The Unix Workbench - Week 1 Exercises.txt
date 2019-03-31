@@ -1,0 +1,69 @@
+Exercise 1 - Hello Terminal!
+1. Print your name to the terminal.
+echo ‘Apple’
+# Apple
+2. Clear your terminal after completing #1.
+clear
+#
+
+Exercise 2 - Navigating the Command Line
+1. Set your working directory to the root directory.
+cd / && pwd
+# /
+2. Set your working directory to your home directory using three different commands.
+cd ~ && pwd
+# ~
+cd /Users/$name && pwd
+# ~
+cd && pwd
+# ~
+3. Find a folder on your computer using your file and folder browser, and then set your working directory to that folder using the terminal.
+cd ~/Desktop && pwd
+# ~/Desktop
+4. List all of the files and folders in the directory you navigated to in #3.
+ls
+# 
+
+Exercise 3 - Creation and Inspection
+1. Create a new directory called workbench in your home directory.
+cd ~ && mkdir Workbench && ls -l
+# ...
+# drwxr-xr-x   2 apple  staff    64 Mar 17 10:40 Workbench
+2. Without changing directories create a file called readme.txt inside of workbench.
+touch ~/Workbench/readme.txt && ls ~/Workbench
+# readme.txt
+3. Append the numbers 1, 2, and 3 to readme.txt so that each number appears on its own line.
+cd ~/Workbench && echo 1 >> readme.txt && echo 2 >> readme.txt && echo 3 >> readme.txt && cat readme.txt
+4. Print readme.txt to the command line.
+head readme.txt
+# 1
+# 2
+# 3
+5. Use output redirection to create a new file in the workbench directory called list.txt which lists the files and folders in your home directory.
+ls ~ > ~/Workbench/list.txt && cat ~/Workbench/list.txt
+# Applications
+# Desktop
+# Documents
+# Downloads
+# Library
+# Movies
+# Music
+# Pictures
+# Public
+# Workbench
+6. Find out how many characters are in list.txt without opening the file or printing it to the command line.
+wc ~/Workbench/list.txt
+#       13      15     126 ~/Workbench/list.txt
+# I edited list.txt in answer #5.
+
+Exercise 4 - Migration and Destruction
+1. Create a file called message.txt in your home directory and move it into another directory.
+touch message.txt && mv message.txt ~/Desktop && ls ~/Desktop
+2. Copy the message.txt you just moved away from your home directory back into your home directory.
+cp ~/Desktop/message.txt ~ && ls
+# Applications		Downloads	Movies		Pictures	Library
+# Desktop		Music		Public		message.txt	Documents
+3. Delete both copies of message.txt. Try to do this without using rm.
+mv ~/message.txt ~/Desktop/message.txt ~/.Trash && ls ~/.Trash
+# message.txt
+

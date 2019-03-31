@@ -1,0 +1,571 @@
+Exercise 1 - Math
+1. Look at the man pages for bc.
+man bc
+# 
+2. Try doing some math in bc interactively.
+echo "24 / 12" | bc -i
+# bc 1.06
+# Copyright 1991-1994, 1997, 1998, 2000 Free Software Foundation, Inc.
+# This is free software with ABSOLUTELY NO WARRANTY.
+# For details type `warranty'. 
+# 2
+3. Try writing some equations in a file and then provide that file as an argument to bc.
+nano littlemath.sh
+# #!/usr/bin/env bash
+# # File: littlemath.sh
+# 
+# expr 21 / 7
+# expr 100 \* 5        
+# expr 40 - 30
+# expr -1 % 2  
+bash littlemath.sh
+# 3
+# 500
+# 10
+# -1
+
+Exercise 2 - Variable
+1. Write a Bash program where you assign two numbers to different variables, and then the program prints the sum of those variables.
+nano twovars.sh
+# #!/usr/bin/env bash
+# # File: twovars.sh
+#
+# one=12              
+# two=20
+# echo "$one + $two" | bc -l
+bash twovars.sh
+# 32
+2. Write another Bash program where you assign two strings to different variables, and then the program prints both of those strings. Write a version where the strings are printed on the same line, and a version where the strings are printed on different lines.
+nano speech.sh
+# #!/usr/bin/env bash
+# # File: speech.sh
+#
+# greet="Hello"
+# where="There"
+# echo "$greet!"
+# echo "$where!"
+# echo "$greet, $where."
+bash speech.sh
+# Hello!
+# There!
+# Hello, There.
+3. Write a Bash program that prints the number of arguments provided to that program multiplied by the first argument provided to the program.
+nano bargs.sh
+# # #!/usr/bin/env bash
+# # File: bargs.sh
+# 
+# echo "Script arguments: $@"
+# echo "$# * $1" | bc -l
+bash bargs.sh 2 4 6 8
+# Script arguments: 2 4 6 8
+# 8
+
+Exercise 3 - User Input
+1. Write a script that asks the user for an adjective, a noun, and a verb, and then use those words in a sentence (like Mad Libs).
+nano madlibs.sh
+# #!/usr/bin/env bash
+# # File: madlibs.sh
+# 
+# echo "Complete the statement by substituting the capitalized parts of speech:"
+# echo "EXCLAMATION! He said ADVERB as he VERB into his convertible NOUN and drove off with his ADJECTIVE wife."
+# read -p "Insert EXCLAMATION: " exclamation
+# read -p "Insert ADVERB: " adverb
+# read -p "Insert VERB: " verb
+# read -p "Insert NOUN: " noun
+# read -p "Insert ADJECTIVE: " adjective
+# echo "$exclamation! He said $adverb as he $verb into his convertible $noun and drove off with his $adjective wife."
+bash madlibs.sh
+# Complete the statement by substituting the capitalized parts of speech:
+# EXCLAMATION! He said ADVERB as he VERB into his convertible NOUN and drove off with his ADJECTIVE wife.
+Insert EXCLAMATION: Ouch
+Insert ADVERB: loudly
+Insert VERB: jumped
+Insert NOUN: Ferrari
+Insert ADJECTIVE: rich
+# Ouch! He said loudly as he jumped into his convertible Ferrari and drove off with his rich wife.
+
+Exercise 4 - Logic and If/Else
+1. Write a Bash script that takes a string as an argument and prints “how proper” if the string starts with a capital letter.
+nano proper.sh
+# #!/usr/bin/env bash
+# # File: proper.sh
+# 
+# read -p "Please enter a sentence. " string
+# if [[ $string =~ ^[A-Z] ]]
+# then
+#   echo "how proper"
+# else
+#   echo "Please capitalize your first word!"
+# fi
+# echo "Please don't forget to properly punctuate your sentence."
+bash proper.sh
+Please enter a sentence. Hi!
+# how proper
+# Please don't forget to properly punctuate your sentence.
+bash proper.sh
+Please enter a sentence. hi!
+# Please capitalize your first word!
+# Please don't forget to properly punctuate your sentence.
+2. Write a Bash script that takes one argument and prints “even” if the first argument is an even number or “odd” if the first argument is an odd number.
+nano parity.sh
+# #!/usr/bin/env bash
+# # File: parity.sh
+# 
+# read -p  "Please insert only one integer or else! " x
+# if [[ $x =~ ^[-+]?[0-9]+$ ]]              
+# then 
+#   if [[ $(( $x % 2 )) -eq 0 ]]
+#   then
+#     echo "even"
+#   else
+#     echo "odd"
+#   fi
+# else
+#   echo "ERROR: Only one integer please."
+# fi
+bash parity.sh
+Please insert only one positive integer or else! 2
+# even
+bash parity.sh
+Please insert only one positive integer or else! 3
+# odd
+bash parity.sh
+Please insert only one positive integer or else! 21.3
+# ERROR: Only one integer please.
+bash parity.sh
+Please insert only one positive integer or else! word
+# ERROR: Only one positive integer please.
+3. Write a Bash script that takes two arguments. If both arguments are numbers, print their sum, otherwise just print both arguments.
+nano prints.sh
+# #!/usr/bin/env bash
+# # File: prints.sh
+# 
+# read -p "Please submit the first number: " x
+# read -p "Please submit the second number: " y
+# if [[ $x =~ ^-?[0-9]*(\.[0-9]*)?$ ]] && [[ $y =~ ^-?[0-9]*(\.[0-9]*)?$ ]]
+# then
+#   echo "$x + $y" | bc -l
+# else
+#   echo "$x $y"
+# fi
+bash prints.sh
+Please submit the first number: 1.2 
+Please submit the second number: 3.8
+# 5.0
+bash prints.sh
+Please submit the first number: r
+Please submit the second number: 4.5
+# r 4.5
+4. Write a Bash script that prints “Thank Moses it’s Friday” if today is Friday. (Hint: take a look at the date program).
+nano friday.sh
+# #!/usr/bin/env bash
+# # File: friday.sh
+# 
+# day=$(date +%A) 
+# if [[ $day  =~ "Friday" ]]
+# then
+#   echo "Thank Moses it’s Friday!"
+# else
+#   echo "Sorry, it’s not Friday."
+# fi
+bash friday.sh # If today is Friday.
+# Thank Moses it’s Friday!
+bash friday.sh # If today is not Friday.
+# Sorry, it’s not Friday.
+
+Exercise 5 - Arrays
+1. Write a bash script where you define an array inside of the script, and the first argument for the script indicates the index of the array element that is printed to the console when the script is run.
+nano arrayone.sh
+# #!/usr/bin/env bash
+# # File: arrayone.sh
+# 
+# read -p "Insert an integer: " x
+# plagues=(blood frogs lice flies sickness boils hail locusts darkness death)
+# echo ${plagues[*]}
+# d=$(( ${#plagues[*]} - 1 ))
+# if [[ $x =~ ^-?[0-9]+$ ]]
+# then
+#   if (( x >= 0 )) && (( x <= d ))
+#   then
+#     echo ${plagues[$x]}
+#     let y=$x+1
+#     echo "Index: $x & Number: $y"
+#   else
+#     echo "Please insert a valid integer!"
+#   fi
+# else
+#   echo "Insert an integer!"
+# fi
+bash arrayone.sh
+Insert an integer: 4
+# blood frogs lice flies sickness boils hail locusts darkness death
+# sickness
+#Index: 4 & Number: 5
+bash arrayone.sh
+Insert an integer: 10
+# blood frogs lice flies sickness boils hail locusts darkness death
+# Please insert a valid integer!
+bash arrayone.sh
+# Insert an integer: -0.3
+# blood frogs lice flies sickness boils hail locusts darkness death
+# Insert an integer!
+
+2. Write a bash script where you define two arrays inside of the script, and the sum of the lengths of the arrays are printed to the console when the script is run.
+nano twoarrays.sh
+# #!/usr/bin/env bash
+# # File: twoarrays.sh
+#
+# plagues=(blood frogs lice flies sickness boils hail locusts darkness death)
+# dwarfs=(grumpy sleepy sneezy doc bashful dopey happy)
+# expr ${#plagues[*]} + ${#dwarfs[*]}
+bash twoarrays.sh
+# 17
+
+Exercise 6 - Braces
+1. Create 100 text files using brace expansion.
+touch {1..100}.txt # Don't bother with ls use the rm command.
+rm {1..100}.txt # Dump this trash.
+
+Exercise 7 - Loops
+1. Write several programs with three levels of nesting and include FOR loops, WHILE loops, and IF statements. Before you run your program try to predict what your program is going to print. If the result is different from your prediction try to figure out why.
+nano time-warp.sh
+#
+#!/usr/bin/env bash
+# File: time-warp.sh
+
+day=$(date +%A)
+
+if [[ $day =~ "Friday" ]]
+then
+  echo "Thank Moses it’s Friday!"
+elif [[ $day =~ "Saturday" ]]
+then
+  echo $day
+  read -p "Insert a positive integer: " counter
+  factorial=1
+ if [[ $counter =~ ^-?[0-9]+$ ]] 
+  then 
+    if [[ $counter -eq 0 ]]
+    then
+      echo $factorial | bc
+    elif [[ $counter -lt 0 ]]                                 
+    then
+      echo "Please insert a positive integer!"
+    else                     
+      while [[ $counter -gt 0 ]]
+      do
+        factorial=$( echo "$factorial * $counter" | bc )
+        counter=$(( $counter - 1 ))
+      done
+      factorial=$(echo "$factorial" | tr -d '\' | tr -d '\n')
+      echo $factorial
+    fi
+  else
+    echo "Please insert an integer!"
+  fi
+elif [[ $day =~ "Sunday" ]]
+then
+  echo $day
+  for class in HUmar HUcast HUcaseal HUnewearl RAmar RAcast RAmarl RAcaseal FOmar FOnewm FOmarl FOnewearl
+  do
+    for id in Bluefull Greenill Oran Pinkal Purplenum Redria Skyly Viridia Yellowboze Whitill
+    do
+      echo "Your Hunter Class is $class, and your Section ID is $id!"
+    done
+  done
+elif [[ $day =~ "Monday" ]]
+then
+  echo $day
+  read -p "Select a positive integer: " count
+if [[ $count =~ ^-?[0-9]+$ ]] 
+  then
+    if [[ $count -lt 0 ]]
+    then
+      echo "Please select a positive integer!"
+    elif [[ $count -gt 0 ]]
+    then
+      while [[ $count -ge 0 ]]
+      do
+        echo "We have $count left!"
+        let count=$count-1
+      done
+    else
+      echo "We have none left!"
+    fi
+  else
+    echo "Please select an integer!"
+  fi
+elif [[ $day =~ "Tuesday" ]]
+then
+  echo $day
+  read -p "Enter a non-zero integer: " x
+  sum=0
+  if [[ $x =~ ^-?[0-9]+$ ]]  
+  then
+    if [[ $x -gt 0 ]]
+    then
+      for (( c=1; c<=$x; c++ ))
+      do
+        sum=$( echo "$sum + $c" | bc) 
+      done
+      echo $sum
+    elif [[ $x -lt 0 ]]
+    then
+      y=-$x
+      for (( j=1; j<=$y; j++ ))
+      do
+        sum=$( echo "$sum + $j" | bc)
+      done
+      echo $sum
+    else
+      echo $sum
+    fi   
+  else
+    echo "Please enter an integer!"
+  fi
+elif [[ $day =~ "Wednesday" ]]
+then
+  echo "It's hump day!"
+elif [[ $day =~ "Thursday" ]]
+then
+  echo "Sorry, it's not Friday yet!" 
+fi
+#
+bash time-warp.sh
+
+2. Enter the yes command into the console, then stop the program from running. Take a look at the man page for yes to learn more about the program.
+yes
+^C # Press Control + C to stop the program.
+man yes
+
+Exercise 8 - Functions
+1. Write a function called plier which multiplies together a sequence of numbers.
+nano plier.sh
+# #!/usr/bin/env bash
+# # File: plier.sh
+#
+# function plier
+# {
+#   local product=1
+#   for num in $@
+#   do
+#     if [[ $num =~ ^-?[0-9]*(\.[0-9]*)?$ ]]
+#     then
+#       product=$( echo "$product * $num" | bc -l )
+#     else
+#       product=0
+#     fi
+#   done
+#   echo $product
+# }
+source plier.sh
+plier 3 5 1.5
+# 22.5
+plier 0 2
+# 0
+plier ed 2 4
+# 0
+2. Write a function called isiteven that prints 1 if a number is even or 0 a number is not even.
+nano isiteven.sh
+# #!/usr/bin/env bash
+# # File: isiteven.sh
+# 
+# function isiteven
+# {
+#    if [[ $1 =~ ^[-+]?[0-9]+$ ]]
+#    then
+#      if [[ $(( $1 % 2 )) -eq 0 ]]
+#      then
+#        echo 1
+#      else
+#        echo 0    
+#      fi
+#    else
+#      echo "ERROR"
+#    fi
+# }
+source isiteven.sh
+isiteven 4
+# 1
+isiteven -2
+# 1
+isiteven -1
+# 0
+isiteven 0
+# 1
+isiteven 3
+# 0
+isiteven ed
+# ERROR
+
+3. Write a function called nevens which prints the number of even numbers when provided with a sequence of numbers. Use isiteven when writing this function.
+nano nevens.sh
+# #!/usr/bin/env bash
+# # File: nevens.sh
+# 
+# function nevens
+# {  
+#    local sum=0
+#    for z in $@
+#    do
+#      if [[ $(isiteven $z) -eq 1 ]]
+#      then
+#        sum=$(($sum + 1))       
+#      else
+#        sum=$sum
+#      fi 
+#    done
+#    echo $sum
+# }
+source nevens.sh
+sevens 4 2 -2 9 ed 4 0
+# 5
+
+4. Write a function called howodd which prints the percentage of odd numbers in a sequence of numbers. Use nevens when writing this function. Correct Answer: howodd0
+nano howodd0.sh
+# #!/usr/bin/env bash
+# # File: howodd0.sh
+# 
+# function howodd0
+# {
+#    local odds=0
+#    local a=$( nevens $@ )
+#    for k in $@
+#    do
+#      if [[ $k =~ ^-?[0-9]+$ ]]
+#      then
+#        if [[ $(( $k % 2 )) -eq 1 ]]
+#        then
+#          odds=$(( $odds + 1 ))
+#        else
+#          odds=$odds
+#        fi
+#      else
+#        odds=$odds
+#      fi
+#    done
+#    echo "$odds / $(( $a+$#-$a ))" | bc -l
+# }
+source howodd0.sh
+howodd0 4 2 -2 9 ed 4 0 
+# .14285714285714285714
+# Better Code Below!
+nano howodd.sh
+# #!/usr/bin/env bash
+# # File: howodd.sh
+# 
+# function howodd
+# {
+#    local odds=0
+#    for a in $@
+#    do
+#      if [[ $a =~ ^-?[0-9]+$ ]]
+#      then
+#        if [[ $(( $a % 2 )) -eq 1 ]]
+#        then
+#          odds=$(( $odds + 1 ))
+#        else
+#          odds=$odds
+#        fi
+#      else
+#        odds=$odds
+#      fi
+#    done
+#    echo "$odds / $#" | bc -l
+# }
+source howodd.sh
+howodd0 4 2 -2 9 ed 4 0 
+# .14285714285714285714
+5. Write a function called fib which prints the number of fibonacci numbers specified.
+nano fib.sh
+# #!/usr/bin/env bash
+# # File: fib.sh
+# function fib
+# {  
+#    local a=0
+#    local b=1
+#    for (( i=0; i<$1; i++ ))
+#    do
+#      echo -n "$a "
+#      fn=$((a + b))
+#      a=$b
+#      b=$fn 
+#    done
+#    echo ""
+# }
+source fib.sh
+fib 10
+# 0 1 1 2 3 5 8 13 21 34
+fib 0
+# 
+fib 2
+# 0 1
+
+Exercise 9 - Writing Programs
+1. Make a script executable. Hint: Go in your home directory and find a .sh file
+chmod u+x time-warp.sh
+./time-warp.sh
+# Execute
+2. Put that script in a directory that you create and make that directory part of your PATH.
+mkdir ~/exec # executable programs folder
+nano ~/.bash_profile
+# export PATH=~/exec:$PATH
+# source ~/exec/script.sh
+source ~/.bash_profile
+
+3. Write a program called range that takes one number as an argument and prints all of the numbers between that number and 0.
+nano range.sh
+# #!/usr/bin/env bash
+# # File: range.sh
+# 
+# function range 
+# { 
+#    local x=0
+#    if [[ $1 =~ ^[0-9]+$ ]]
+#    then
+#      for (( q=0; q<=$1; q++ ))
+#      do
+#        echo -n "$q "
+#      done
+#    else
+#      echo "ERROR"
+#    fi
+#    echo ""
+# }
+source range.sh
+range 4
+# 0 1 2 3 4
+range 1.2
+# ERROR
+#
+
+4. Write a program called extremes which prints the maximum and minimum values of a sequence of numbers.
+nano extremes.sh
+# #!/usr/bin/env bash
+# # File: extremes.sh
+#
+# function extremes
+# {
+#    local post=($(echo "$@" | tr " " "\n" | sort -g))
+#    for x in $@
+#    do
+#      if [[ $x =~ ^-?[0-9]*(\.[0-9]*)?$ ]]
+#      then
+#        local min=${post[0]}
+#        local max=${post[$#-1]}
+#      else
+#        echo "ERROR: ONLY INSERT NUMBERS!!!"
+#      fi             
+#    done
+#    echo "Minimum: $min"
+#    echo "Maximum: $max"
+# }
+source extremes.sh
+extremes -1 0 1
+# Minimum: -1
+# Maximum: 1
+extremes a p 3 0 30
+# ERROR: ONLY INSERT NUMBERS!!!
+# ERROR: ONLY INSERT NUMBERS!!!
+# Minimum: a
+# Maximum: 30

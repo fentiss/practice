@@ -1,0 +1,224 @@
+Exercise 1 - Getting Started with Git
+1. Start a repository in a new directory.
+cd
+mkdir git-exercises
+cd git-exercises
+git init
+# Initialized empty Git repository in /Users/apple/git-exercises/.git/
+
+2. Create a new file in your new Git repository. Make sure Git is tracking the file and then create a new commit.
+echo "Welcome to My Next Repo" > readme.txt
+git add readme.txt
+git commit -m "added readme.txt"
+# [master (root-commit) e9bbbdb] added readme.txt
+#  1 file changed, 1 insertion(+)
+#  create mode 100644 readme.txt
+
+3. Make changes to the file, and then commit these changes.
+echo "Learning Git is going well so far." >> readme.txt
+git add readme.txt
+git commit -m "added a new line to readme.txt"
+# [master b2fe8ec] added line 2 to readme.txt
+#  1 file changed, 1 insertion(+)
+
+4. Add two new files to your repository, but only commit one of them. What is the status of your repository after the commit?
+touch file1.txt file2.txt
+git add file1.txt
+git commit -m "added file1.txt"
+# [master a9d29d9] added file1.txt
+#  1 file changed, 0 insertions(+), 0 deletions(-)
+#  create mode 100644 file1.txt
+
+5. Undo the last commit, add the untracked file, and redo the commit.
+git reset --soft HEAD~
+git add file2.txt
+git commit -m "added both files"
+# [master a8dfc33] added both files
+#  2 files changed, 0 insertions(+), 0 deletions(-)
+#  create mode 100644 file1.txt
+#  create mode 100644 file2.txt
+
+Exercise 2 - Important Git Features
+1. Look at the help pages for git log and git diff.
+git help log
+git help diff
+2. Add to the .gitignore you already started to include a specific file name, then add that file to your repository.
+echo "clone.giff" > .gitignore
+git add .gitignore
+git commit -m "added gitignore"
+# [master 00baf51] added gitignore
+#  1 file changed, 1 insertion(+)
+#  create mode 100644 .gitignore
+touch clone.giff
+git status
+# On branch master
+# nothing to commit, working tree clean
+
+3. Create a file that contains the Git log for this repository. Use grep to see which day of the week most of the commits occurred on.
+eval git log > log.txt
+grep $(date +%a) log.txt # It was Saturday.
+Date:   Sat Mar 30 18:07:14 2019 -0400
+Date:   Sat Mar 30 17:57:34 2019 -0400
+Date:   Sat Mar 30 17:51:15 2019 -0400
+Date:   Sat Mar 30 17:47:03 2019 -0400
+
+Exercise 3 - Branching
+1. Start a new branch.
+git branch stage
+2. Switch to that branch and add commits to it. Switch to an older branch and then merge the new branch into your current branch.
+git checkout stage
+# Switched to branch 'stage'
+echo "coffee.txt" > drinks.txt
+echo "tea.txt" >> drinks.txt
+git add drinks.txt
+git commit -m "added drinks"
+# [stage d3d63ed] added drinks
+#  1 file changed, 2 insertions(+)
+#  create mode 100644 drinks.txt
+echo $'Apples\nBananas\nBerries' > fruits.txt
+git add fruits.txt
+git commit -m "added fruits"
+# [stage 852ba60] added fruits
+#  1 file changed, 3 insertions(+)
+#  create mode 100644 fruits.txt
+git add log.txt
+git commit -m "added logs"
+# [stage 33572b5] added logs
+#  1 file changed, 23 insertions(+)
+#  create mode 100644 log.txt
+git checkout master
+# Switched to branch 'master'
+git merge stage
+# Updating 00baf51..33572b5
+# Fast-forward
+#  drinks.txt |  2 ++
+#  fruits.txt |  3 +++
+#  log.txt    | 23 +++++++++++++++++++++++
+#  3 files changed, 28 insertions(+)
+#  create mode 100644 drinks.txt
+#  create mode 100644 fruits.txt
+#  create mode 100644 log.txt
+
+3. Purposefully create and resolve a merge conflict.
+git checkout stage
+# Switched to branch 'stage'
+echo "wine" >> drinks.txt
+git add drinks.txt
+git commit -m "Added wine to drinks.txt"
+# [stage 670567a] Added wine to drinks.txt
+#  1 file changed, 1 insertion(+)
+git checkout master
+# Switched to branch 'master'
+echo "beer" >> drinks.txt
+git add drinks.txt
+git commit -m "Added beer to drinks.txt"
+# [stage 5a690fa] Added beer to drinks.txt
+#  1 file changed, 1 insertion(+)
+git merge stage
+# Auto-merging drinks.txt
+# CONFLICT (content): Merge conflict in drinks.txt
+# Automatic merge failed; fix conflicts and then commit the result.
+cat drinks.txt
+# coffee.txt
+# tea.txt
+# <<<<<<< HEAD
+# beer
+# =======
+# wine
+# >>>>>>> stage
+echo $'Coffee\nTea\nBeer' > drinks.txt
+git add drinks.txt
+git commit -m "edited drinks.txt"
+# [master dc6da0b] edited drinks.txt
+git checkout stage
+# Switched to branch 'stage'
+git merge master
+# Updating 670567a..dc6da0b
+# Fast-forward
+#  drinks.txt | 6 +++---
+# 1 file changed, 3 insertions(+), 3 deletions(-)
+cat drinks.txt
+# Coffee
+# Tea
+# Beer
+git branch
+#   master
+# * stage
+
+Exercise 4 - GitHub
+1. Create a new repository on GitHub. Clone your repository and add a README.md file. Push this file to GitHub and create a GitHub Pages website for this repository.
+git remote add origin git@github.com:fentiss/practice.git # Work with the git-exercises repository.
+git push -u origin master
+# Enumerating objects: 30, done.
+# Counting objects: 100% (30/30), done.
+# Delta compression using up to 4 threads
+# Compressing objects: 100% (20/20), done.
+# Writing objects: 100% (30/30), 2.61 KiB | 445.00 KiB/s, done.
+# Total 30 (delta 9), reused 0 (delta 0)
+# remote: Resolving deltas: 100% (9/9), done.
+# To github.com:fentiss/practice.git
+#  * [new branch]      master -> master
+# Branch 'master' set up to track remote branch 'master' from 'origin'.
+git branch master # Don't forget to use the master branch after setting up the new repository.
+# Switched to branch 'master'
+mv readme.txt README.md
+nano README.md
+# # Fentiss
+# Welcome to My Next Repo
+# 
+# Learning Git is going well so far.
+git add -A
+git commit -m "renamed readme.txt to README.md" # "updated README.md" too
+# [stage 7820187] renamed readme.txt to README.md
+#  1 file changed, 2 insertions(+)
+#  rename readme.txt => README.md (84%)
+#
+# [master d7149ef] updated README.md
+#  1 file changed, 1 insertion(+)
+git push
+# Enumerating objects: 5, done.
+# Counting objects: 100% (5/5), done.
+# Delta compression using up to 4 threads
+# Compressing objects: 100% (3/3), done.
+# Writing objects: 100% (3/3), 345 bytes | 345.00 KiB/s, done.
+# Total 3 (delta 1), reused 0 (delta 0)
+# remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+# To github.com:fentiss/practice.git
+#    7820187..d7149ef  master -> master
+#
+# Go to fentiss.github.io/practice for more details about this repository.
+
+
+2. Fork an existing repository (try one of mine: https://github.com/seankross) and try to identify something valuable you could contribute. Make changes or additions to that repository, then open a pull request.
+cd
+git clone git@github.com:fentiss/the-unix-workbench.git
+# Cloning into 'the-unix-workbench'...
+# remote: Enumerating objects: 3, done.
+# remote: Counting objects: 100% (3/3), done.
+# remote: Compressing objects: 100% (3/3), done.
+# remote: Total 3782 (delta 0), reused 0 (delta 0), pack-reused 3779
+# Receiving objects: 100% (3782/3782), 8.63 MiB | 6.67 MiB/s, done.
+# Resolving deltas: 100% (2455/2455), done.
+cd the-unix-workbench
+cd docs
+nano 05-Bash-Programming.md
+# Insert additions
+git add 05-Bash-Programming.md
+git commit -m "Bash Programming with double parentheses: Attempt #1"
+# [master 326db44] Bash Programming with double parentheses: Attempt #1
+#  1 file changed, 73 insertions(+), 1 deletion(-)
+git push
+# Create the pull request on GitHub.
+
+3. Read through GitHub’s Guides.
+https://guides.github.com/activities/hello-world/
+https://lab.github.com
+https://developer.github.com
+
+
+Exercise 5 - Cloud Computing
+1. Write a bash script that takes a file path as an argument and copies that file to a designated folder on your server.
+
+2. Find a file online that changes periodically, then write a program to download that file every time it changes.
+
+3. Try creating your own Twitter or GitHub bot with the Twitter API or the GitHub API.
